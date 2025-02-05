@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { Provider } from "react-redux";
+import { HeroUIProvider } from "@heroui/react";
 import { makeStore, AppStore } from "../store/store";
 
 export default function StoreProvider({
@@ -14,5 +15,9 @@ export default function StoreProvider({
     storeRef.current = makeStore();
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return (
+    <HeroUIProvider>
+      <Provider store={storeRef.current}>{children}</Provider>
+    </HeroUIProvider>
+  );
 }
