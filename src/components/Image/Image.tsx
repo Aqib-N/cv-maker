@@ -4,10 +4,10 @@ import React from "react";
 import { Image } from "@heroui/react"; // Assuming Hero UI provides an Image component
 
 interface ImageProps {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
   objectFit?: "contain" | "cover" | "fill" | "none";
   objectPosition?: string;
   quality?: number; // Optional if Hero UI supports quality control
