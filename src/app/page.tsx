@@ -1,8 +1,17 @@
-// import Image from "next/image";
-// import { Button } from "@heroui/button";
-
-// import NextImage from "../components/Image/Image";
+import CustomButton from "../components/Button/Button";
 
 export default function Home() {
-  return <div className="h-full min-h-screen !bg-lightPurple"></div>;
+  const handlePress = () => {
+    alert("");
+  };
+  return (
+    <div className="h-full min-h-screen !bg-lightPurple">
+      <CustomButton
+        color="danger"
+        label="Press Me"
+        leftIcon="/icons/premium.svg"
+        onPress={handlePress}
+      />
+    </div>
+  );
 }

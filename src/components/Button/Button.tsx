@@ -1,7 +1,39 @@
 import { Button } from "@heroui/react";
-import NextImage from "../Image/Image";
+import Image from "next/image";
 
-interface ButtonProps {
+interface CustomIconStartProps {
+  imgSrc: string;
+}
+
+export const CustomIconStart: React.FC<CustomIconStartProps> = ({ imgSrc }) => {
+  return (
+    <Image
+      src={imgSrc}
+      alt="btn-icon"
+      width={24}
+      height={24}
+      className="w-auto h-auto object-cover"
+    />
+  );
+};
+
+interface CustomIconEndProps {
+  imgSrc: string;
+}
+
+export const CustomIconEnd: React.FC<CustomIconEndProps> = ({ imgSrc }) => {
+  return (
+    <Image
+      src={imgSrc}
+      alt="btn-icon"
+      width={24}
+      height={24}
+      className="w-auto h-auto object-cover"
+    />
+  );
+};
+
+interface CustomButtonProps {
   color?:
     | "default"
     | "primary"
@@ -9,44 +41,29 @@ interface ButtonProps {
     | "success"
     | "warning"
     | "danger";
-  isDisabled?: boolean;
-  otherClasses?: string;
-  iconSrc?: string;
-  altText?: string;
-  text: string;
-  onClick?: () => void;
+  label: string;
+  leftIcon?: string;
+  rightIcon?: string;
+  onPress?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function CustomButton({
-  color,
-  isDisabled,
-  onClick,
-  otherClasses,
-  iconSrc,
-  altText,
-  text,
-}: ButtonProps) {
+const CustomButton: React.FC<CustomButtonProps> = ({
+  color = "default",
+  label,
+  leftIcon,
+  rightIcon,
+  onPress,
+}) => {
   return (
     <Button
       color={color}
-      isDisabled={isDisabled}
-      onClick={onClick}
-      className={`w-max p-[.625rem] flex items-center justify-between gap-5 rounded-xl ${otherClasses}`}
+      startContent={leftIcon && <CustomIconStart imgSrc={leftIcon} />}
+      endContent={rightIcon && <CustomIconEnd imgSrc={rightIcon} />}
+      onClick={onPress}
     >
-      {iconSrc && (
-        <NextImage
-          src={iconSrc}
-          alt={altText}
-          width={24}
-          height={24}
-          objectFit="cover"
-          objectPosition="center"
-          loading="lazy"
-          priority={true}
-          className=""
-        />
-      )}
-      <span>{text}</span>
+      {label}
     </Button>
   );
-}
+};
+
+export default CustomButton;

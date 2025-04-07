@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import NextImage from "../Image/Image";
-import CustomButton from "../Button/Button";
+// import CustomButton from "../Button/Button";
 
 const Sidebar = () => {
   return (
@@ -117,13 +117,13 @@ const Sidebar = () => {
           </li>
           <li>
             <Link href="/" className="px-[2.8125rem] flex">
-              <CustomButton
+              {/* <CustomButton
                 text="Go premium"
                 iconSrc="/premium.svg"
                 altText="premium-icon"
                 color="warning"
                 otherClasses="!gap-2 py-[.4375rem] pl-[.6875rem] pr-4 !text-p1 text-darkCharcoal font-normal hover:font-medium active:font-bold"
-              />
+              /> */}
             </Link>
           </li>
           <li>

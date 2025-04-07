@@ -1,7 +1,6 @@
-// src/components/Image/Image.tsx
 "use client";
 import React from "react";
-import { Image } from "@heroui/react"; // Assuming Hero UI provides an Image component
+import { Image } from "@heroui/react";
 
 interface ImageProps {
   src?: string;
@@ -10,7 +9,7 @@ interface ImageProps {
   height?: number;
   objectFit?: "contain" | "cover" | "fill" | "none";
   objectPosition?: string;
-  quality?: number; // Optional if Hero UI supports quality control
+  quality?: number;
   priority?: boolean;
   loading?: "lazy" | "eager";
   className?: string;
@@ -29,7 +28,6 @@ const NextImage: React.FC<ImageProps> = ({
   className = "",
   style = {},
 }) => {
-  // Inline styles to handle objectFit and objectPosition
   const imageStyle: React.CSSProperties = {
     objectFit,
     objectPosition,
@@ -45,7 +43,7 @@ const NextImage: React.FC<ImageProps> = ({
         height={height}
         loading={loading}
         //   priority={priority}
-        style={imageStyle} // Apply inline styles
+        style={imageStyle}
       />
     </div>
   );
