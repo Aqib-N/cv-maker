@@ -2,9 +2,12 @@ name: Docker Image CI/CD
 
 on:
   push:
-    branches: ["**"] # This will trigger on any branch push
+    branches: ["**"] # Triggers on all branches
   pull_request:
     branches: ["main"]
+
+env:
+  DOCKER_IMAGE: "aqib777/cv-maker" # 👈 Replace with your Docker Hub image name
 
 jobs:
   build-and-push:
@@ -12,6 +15,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Verify Dockerfile
+        run: |
+          if [ ! -f Dockerfile ]; then
+            echo "❌ Error: Dockerfile not found!"
+            exit 1
+          fi
 
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/main'
@@ -24,11 +37,19 @@ jobs:
         run: |
           docker build . \
             --file Dockerfile \
-            --tag my-image-name:$(git rev-parse --short HEAD) \
-            --tag my-image-name:latest
+            --tag $DOCKER_IMAGE:$(git rev-parse --short HEAD) \
+            --tag $DOCKER_IMAGE:latest \
+            --progress=plain  # Shows detailed build output
 
       - name: Push Docker image
         if: github.ref == 'refs/heads/main'
         run: |
-          docker push my-image-name:$(git rev-parse --short HEAD)
-          docker push my-image-name:latest
+          docker push $DOCKER_IMAGE:$(git rev-parse --short HEAD)
+          docker push $DOCKER_IMAGE:latest
+
+      - name: Debug on failure
+        if: failure()
+        run: |
+          echo "Build failed! Checking Docker:"
+          docker images
+          docker ps -a
