@@ -1,9 +1,18 @@
-version: "3.9"
+version: "3.8"
 
 services:
-  nextapp:
-    container_name: nextapp
-    image: nextapp
-    build: .
+  cv-maker:
+    container_name: cv-maker
+    build:
+      context: .
+      target: dev # Change to 'production' for prod builds
+    volumes:
+      - .:/cv-maker
+      - /cv-maker/node_modules
+      - /cv-maker/.next
     ports:
       - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    restart: unless-stopped

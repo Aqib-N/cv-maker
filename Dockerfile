@@ -1,67 +1,58 @@
+# Use Node.js 18 Alpine as base image
 FROM node:18-alpine AS base
+LABEL maintainer="CV-Maker Development Team"
+WORKDIR /cv-maker
 
 # Install dependencies only when needed
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-
-# Install dependencies based on the preferred package manager
+RUN apk add --no-cache libc6-compat git
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Development stage with hot reloading
+FROM base AS dev
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    NODE_ENV=development \
+    HOSTNAME=0.0.0.0 \
+    PORT=3000 \
+    CHOKIDAR_USEPOLLING=true \
+    WATCHPACK_POLLING=true
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /cv-maker/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN yarn build
-
-# If using npm comment out above and use below instead
-# RUN npm run build
-
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
-
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
 EXPOSE 3000
+CMD ["yarn", "dev"]
 
-ENV PORT 3000
-# set hostname to localhost
-ENV HOSTNAME "0.0.0.0"
+# Build stage
+FROM base AS builder
+COPY --from=deps /cv-maker/node_modules ./node_modules
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN yarn build && yarn cache clean
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+# Production stage
+FROM base AS production
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+
+RUN addgroup -g 1001 -S cvmaker && \
+    adduser -u 1001 -S cvmaker -G cvmaker
+
+COPY --from=builder --chown=cvmaker:cvmaker /cv-maker/public ./public
+COPY --from=builder --chown=cvmaker:cvmaker /cv-maker/.next/standalone ./
+COPY --from=builder --chown=cvmaker:cvmaker /cv-maker/.next/static ./.next/static
+
+USER cvmaker
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://localhost:3000 || exit 1
+
 CMD ["node", "server.js"]
