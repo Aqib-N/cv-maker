@@ -1,3 +1,4 @@
+"use client";
 import CustomButton from "../components/Button/Button";
 
 export default function Home() {
@@ -7,10 +8,11 @@ export default function Home() {
   return (
     <div className="h-full min-h-screen !bg-lightPurple">
       <CustomButton
-        color="danger"
+        color="primary"
         label="Press Me"
         leftIcon="/icons/premium.svg"
-        onPress={handlePress}
+        onClick={handlePress}
+        iconSize={20}
       />
     </div>
   );
