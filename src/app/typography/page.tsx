@@ -1,21 +1,29 @@
-// import { getPosts } from "@/lib/posts";
-// import { Post } from "@/ui/post";
-
-// export default async function Page() {
-//   const posts = await getPosts();
-
-//   return (
-//     <ul>
-//       {posts.map((post) => (
-//         <Post key={post.id} post={post} />
-//       ))}
-//     </ul>
-//   );
-// }
+"use client";
 import React from "react";
+import CustomButton from "@/components/Button/Button"; // use @ alias!
 
-const page = () => {
-  return <div>page</div>;
+const Page = () => {
+  return (
+    <div className="m-6">
+      {/* Buttons  */}
+      <div className="flex flex-col items-start gap-10">
+        <h2 className="text-h2 font-bold">Buttons</h2>
+        <div className="gap-6">
+          <CustomButton
+            label={"Press Me"}
+            leftIcon="/icons/heart.svg"
+            rightIcon=""
+          />
+          <CustomButton
+            label={"Press Me"}
+            color="primary"
+            leftIcon="/icons/heart.svg"
+            rightIcon=""
+          />
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default page;
+export default Page;
