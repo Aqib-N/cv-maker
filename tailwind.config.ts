@@ -33,7 +33,7 @@ export default {
         p1: ["1.375rem", "2.1875rem"], // 22px, 35px --- used
         p2: ["1rem", "1.5rem"], // 16px, 24px ---
         p4: ["1.125rem", "1.5625rem"], //18px, 25px
-        p5: ["1rem", "1.375rem"], //16px, 22px
+        p5: [".875rem", "1.25rem"], //14px, 20px
         bannerText: ["1.5rem", "2rem"], // 20px, 32px
       },
       colors: {
@@ -79,6 +79,9 @@ export default {
         lightGreenishYellow: "#D3DA47",
         backgroundGray: "#FAFBFC",
         lightestBackgroundGray: "#F1F1FE",
+        charcoalBlack: "#09090A",
+        darkGrey: "#1F1F22",
+        lightGrey: "#F5F5F5",
       },
     },
   },
