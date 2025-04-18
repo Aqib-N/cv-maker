@@ -25,11 +25,11 @@ export default {
         largeText: ["4rem", "5rem"], // 64px, 80px,
         largeText2: ["3.4375rem", "4.0625rem"], //55px, 65px
         h1: ["3rem", "3.5rem"], // 56px, 64px
-        h2: ["3rem", "3.5rem"], // 48px, 56px
+        h2: ["38px", "2.875rem"], // 48px, 56px --- used
         h3: ["2rem", "2.5rem"], // 32px, 40px
         h4: ["1.3rem", "1.75rem"], // 20.5px, 32px
         h5: ["1.75rem", "2.25rem"], // 28px, 36px
-        h6: ["1.625rem", "2.375rem"], //26px, 38px
+        h6: ["1.625rem", "2.375rem"], //26px, 38px --- used
         p1: ["1.375rem", "2.1875rem"], // 22px, 35px --- used
         p2: ["1rem", "1.5rem"], // 16px, 24px ---
         p4: ["1.125rem", "1.5625rem"], //18px, 25px
@@ -45,7 +45,7 @@ export default {
         // darkGray: "#7D7D7D",
         // charcoal: "#39363C",
         // darkCharcoal: "#282828",
-        // black: "#000000",
+        black: "#000000",
         // lightBeige: "#F4DBC0",
         // beige: "#E3C3A5",
         // sand: "#D3B496",
@@ -79,6 +79,7 @@ export default {
         // lightGreenishYellow: "#D3DA47",
         // backgroundGray: "#FAFBFC",
         // lightestBackgroundGray: "#F1F1FE",
+        semiBlack: "#00000080",
         charcoalBlack: "#09090A",
         darkGrey: "#1F1F22",
         lightGrey: "#F5F5F5",

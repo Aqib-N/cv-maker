@@ -1,3 +1,4 @@
+"use client";
 import { Button, ButtonProps } from "@heroui/react";
 import Image, { StaticImageData } from "next/image";
 import { forwardRef } from "react";
