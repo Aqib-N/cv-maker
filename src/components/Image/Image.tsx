@@ -10,10 +10,11 @@ interface ImageProps {
   objectFit?: "contain" | "cover" | "fill" | "none";
   objectPosition?: string;
   quality?: number;
-  priority?: boolean;
+  // priority?: boolean;
   loading?: "lazy" | "eager";
   className?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
 const NextImage: React.FC<ImageProps> = ({
@@ -23,10 +24,11 @@ const NextImage: React.FC<ImageProps> = ({
   height,
   objectFit = "cover",
   objectPosition = "center",
-  //   priority = false,
+  // priority,
   loading = "lazy",
   className = "",
   style = {},
+  onClick,
 }) => {
   const imageStyle: React.CSSProperties = {
     objectFit,
@@ -35,14 +37,14 @@ const NextImage: React.FC<ImageProps> = ({
   };
 
   return (
-    <div className={`relative ${className}`} style={style}>
+    <div className={`relative ${className}`} style={style} onClick={onClick}>
       <Image
         src={src}
         alt={alt}
         width={width}
         height={height}
         loading={loading}
-        //   priority={priority}
+        // priority={priority}
         style={imageStyle}
       />
     </div>
