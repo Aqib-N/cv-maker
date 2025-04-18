@@ -153,7 +153,7 @@ const Sidebar = () => {
             {!isCollapsed && "Logout"}
           </Link>
         </li>
-        <li className="w-full flex items-center justify-between gap-[1.375rem] hover:bg-lightGrey cursor-pointer">
+        <li className="w-full flex items-center justify-between gap-[1.375rem] hover:bg-lightGrey cursor-pointer rounded-2xl">
           <div className="w-full flex items-center gap-4 p-4 text-p2 font-normal">
             <NextImage
               src="/icons/light-mode.svg"
