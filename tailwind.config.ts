@@ -44,7 +44,7 @@ export default {
         // mediumGray: "#CCC9C9",
         // darkGray: "#7D7D7D",
         // charcoal: "#39363C",
-        // darkCharcoal: "#282828",
+        darkCharcoal: "#282828",
         black: "#000000",
         // lightBeige: "#F4DBC0",
         // beige: "#E3C3A5",

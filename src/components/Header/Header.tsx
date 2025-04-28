@@ -1,27 +1,17 @@
+// src/components/Header/Header.tsx
 "use client";
 import { Select, SelectItem } from "@heroui/react";
 
 const users = [
-  {
-    id: 1,
-    lang: "Eng",
-  },
-  {
-    id: 2,
-    lang: "Urdu",
-  },
-  {
-    id: 3,
-    lang: "Korean",
-  },
-  {
-    id: 4,
-    lang: "Arabic",
-  },
+  { id: 1, lang: "Eng" },
+  { id: 2, lang: "Urdu" },
+  { id: 3, lang: "Korean" },
+  { id: 4, lang: "Arabic" },
 ];
+
 const Header = () => {
   return (
-    <header className="bg-white py-10 px-[1.9375rem] flex justify-between items-center">
+    <header className="bg-white py-10 px-[1.9375rem] flex justify-between items-center shrink-0">
       <h1 className="text-[1.875rem] leading-normal font-semibold text-black capitalize">
         home
       </h1>
